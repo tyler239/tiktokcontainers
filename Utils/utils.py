@@ -110,7 +110,6 @@ def removeProxy() :
 def closeWindow() :
       awaitPure()
       pyautogui.hotkey('ctrl', 'w')
-      exit()
 
 
 #Choose a container

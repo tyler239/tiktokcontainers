@@ -3,9 +3,8 @@ import webbrowser, pyautogui
 from Utils.utils import *
 
 #Put here the (x,y) location of the required elements
-profile_icon = (1332,115)
-logout_location = (1240,462)
-search_bar = (505,657)
+firefox_search_bar = (516, 64)
+archive_search_bar = (505,657)
 open_button_of_search_bar = (1191,687)
 
 
@@ -13,18 +12,21 @@ def main() :
     accounts = getAccounts()
     path = getVideoPath() 
 
-    for account in accounts :
+    #Open the browser in google
+    webbrowser.open('https://www.google.com/')
+    awaitPure()
 
-        #Open the browser in google
-        webbrowser.open('https://www.google.com/')
-        awaitPure()
+    for account in accounts :    
 
         #Change to the container  
         chooseContainer(account[0])
         randomAwait()
 
         #Go to tiktok
-        locateAndClick('magnifying.png')
+        try : locateAndClick('magnifying.png')
+        except : 
+            try : pyautogui.click(firefox_search_bar, duration = 1)
+            except : closeWindow() 
         pyautogui.typewrite('https://www.tiktok.com', interval = 0.25)
         pyautogui.press('enter')
         awaitPure()
@@ -52,7 +54,7 @@ def main() :
         randomAwait()
 
         #Click on the search bar of the archive explorer
-        pyautogui.click(search_bar ,duration = 1)
+        pyautogui.click(archive_search_bar ,duration = 1)
 
         #Put the path of the video
         pyautogui.typewrite(path, interval = 0.1)
