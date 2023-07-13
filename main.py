@@ -26,7 +26,9 @@ def main() :
         try : locateAndClick('magnifying.png')
         except : 
             try : pyautogui.click(firefox_search_bar, duration = 1)
-            except : closeWindow() 
+            except : 
+                closeWindow()
+                continue 
         pyautogui.typewrite('https://www.tiktok.com', interval = 0.25)
         pyautogui.press('enter')
         awaitPure()
@@ -40,7 +42,9 @@ def main() :
 
         #Click in upload video
         try : locateAndClick('upload.png')
-        except : closeWindow()
+        except : 
+            closeWindow()
+            continue
 
         awaitPure()
 
@@ -49,7 +53,9 @@ def main() :
     
         #Click on "select file" button
         try : locateAndClick('selectFile.png')
-        except : closeWindow()
+        except : 
+            closeWindow()
+            continue
 
         randomAwait()
 
@@ -62,10 +68,13 @@ def main() :
         #Click in open
         pyautogui.click(open_button_of_search_bar,duration = 1)
         awaitPure()
+        sleep(180)
 
         #Add captions
         try : locateAndClick('hashtag.png')
-        except : closeWindow()
+        except : 
+            closeWindow()
+            continue
 
         deleteAutoGui()
         pyautogui.typewrite(account[1], interval = 0.1)
@@ -79,7 +88,9 @@ def main() :
 
         #Click on the post button
         try : locateAndClick('post.png')
-        except : closeWindow()
+        except : 
+            closeWindow()
+            continue
              
         awaitPure()
  
@@ -88,7 +99,9 @@ def main() :
 
         #Click on the profile button
         try : locateAndClick('viewProfile.png')
-        except : closeWindow()
+        except : 
+            closeWindow()
+            continue
              
         awaitPure()
 

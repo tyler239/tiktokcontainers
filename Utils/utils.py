@@ -4,7 +4,7 @@ from time import sleep
 
 #Await functions
 randomAwait = lambda : sleep(random.randint(1,3))
-awaitPure = lambda : sleep(random.randint(15,20))
+awaitPure = lambda : sleep(random.randint(25,30))
 
 
 #User Interface functions
@@ -22,6 +22,8 @@ def locateAndClick(image) :
                 if(t) :
                       pyautogui.click(t, duration = random.randint(1,3))
                       return 
+                if(image != 'post.png') : pyautogui.hotkey('ctrl', 'r')
+                awaitPure()
                 
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
 
