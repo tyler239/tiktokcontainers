@@ -1,4 +1,4 @@
-import random, os, pyautogui, re, time, random
+import random, os, pyautogui,  time, random
 from time import sleep
 
 
@@ -22,7 +22,6 @@ def locateAndClick(image) :
                 if(t) :
                       pyautogui.click(t, duration = random.randint(1,3))
                       return 
-                if(image != 'post.png') : pyautogui.hotkey('ctrl', 'r')
                 awaitPure()
                 
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
@@ -40,6 +39,7 @@ def likeRandomVideo() :
             if(int(time.time())%3 == 0) : locateAndClick('like.png')
             else : randomMovement()
 
+            randomAwait()
             pyautogui.scroll(-1100)
             sleep(random.randint(1,2))
             pyautogui.scroll(-1100)
