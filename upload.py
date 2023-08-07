@@ -1,12 +1,15 @@
 #Importing the libraries
 import webbrowser, pyautogui, random
 from Utils.utils import *
+import logging
 
 #Put here the (x,y) location of the required elements
 firefox_search_bar = (516, 64)
 archive_search_bar = (505,657)
 open_button_of_search_bar = (1191,687)
 
+
+logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def selectFile(path, hashtag) :
      #Click on "select file" button
@@ -40,6 +43,7 @@ def selectFile(path, hashtag) :
 
 
 def main() :
+    logging.info(f'Program started in the {__name__} sctipt')
     accounts = getAccounts()
     random.shuffle(accounts)
 
@@ -48,6 +52,7 @@ def main() :
     awaitPure()
 
     for account in accounts :
+        logging.info(f'############ Account: {account[0]} ############')
         path = getVideoPath() 
 
          #Change to the container  
@@ -59,6 +64,7 @@ def main() :
         except : 
             try : pyautogui.click(firefox_search_bar, duration = 1)
             except : 
+                logging.warning('Nor the magnifying glass nor the search bar were found')
                 closeWindow()
                 continue 
         pyautogui.typewrite('https://www.tiktok.com/upload', interval = 0.25)
@@ -70,6 +76,7 @@ def main() :
 
         try : selectFile(path, account[1])
         except :
+            logging.warning('Error in selecting the file, first try')
             closeWindow()
             continue
 
@@ -83,6 +90,7 @@ def main() :
                selectFile(path, account[1])
                locateAndClick('post.png')
            except :
+               logging.warning('Error in posting the video')
                closeWindow()
                continue            
              
@@ -93,6 +101,7 @@ def main() :
         #Click on the profile button
         try : locateAndClick('viewProfile.png')
         except : 
+            logging.debug('The view profile button was not found')
             closeWindow()
             continue
             

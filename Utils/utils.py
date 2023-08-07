@@ -1,4 +1,4 @@
-import random, os, pyautogui,  time, random
+import random, os, pyautogui,  time, random, logging
 from time import sleep
 
 
@@ -24,11 +24,12 @@ def locateAndClick(image) :
                       return 
                 awaitPure()
                 
+        logging.warning(f'Element {image} was not found')
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
 
 
 def likeRandomVideo() : 
-      x = random.randint(1,4)
+      x = random.randint(1,3)
       for _ in range(1,x) : 
             
             #Await for a sec
