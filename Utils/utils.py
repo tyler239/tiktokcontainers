@@ -1,11 +1,21 @@
-import random, os, pyautogui,  time, random, logging
+import random, os, pyautogui, random, logging
 from time import sleep
 
+#CONSTANTS
+firefox_search_bar = (516, 64)
+archive_search_bar = (505,657)
+open_button_of_search_bar = (1191,687)
+TIKTOK_CENTER = (720, 400)
 
 #Await functions
 randomAwait = lambda : sleep(random.randint(1,3))
-awaitPure = lambda : sleep(random.randint(25,30))
+awaitPure = lambda : sleep(random.randint(5,10))
 
+COMMENTS = ['bem', 'nem falo isso ai', 'kkkkkkkkkkk', 'kkk', 'k', 'KKKKKKKKKKKKKKKK', 'KKKKKKKKK'
+            , 'K', 'KK', 'SKSKSKSKSKSSKSKSKSKSKSKSS', 'APSDOIFAPSIOJFDJASIJDF', 'RS', 'RSRSRSRSRSRS',
+            'rsrs', 'botei fe', 'la ele', 'la ele mil', 'hahahaahahahahaahaha', 'ahahahahaahah'
+            , 'ha', 'ah', 'ahh', 'ahhh', 'ahhh ent ele e', 'jeejejejeejejej', 'JEJEJEEJEJEJEJE', 
+            'je', 'lmao', 'LMAO', 'idk...', 'aka yo mama', 'cringe', 'fake']
 
 #User Interface functions
 def deleteAutoGui() :
@@ -20,33 +30,91 @@ def locateAndClick(image) :
                 c = 0.9 - (i/10 if i != 0 else 0)
                 t = pyautogui.locateCenterOnScreen(p, grayscale=False, confidence=c)
                 if(t) :
-                      pyautogui.click(t, duration = random.randint(1,3))
+                      pyautogui.click(t, duration = random.randint(1,2))
                       return 
                 awaitPure()
                 
         logging.warning(f'Element {image} was not found')
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
 
+def justLocate(image) :
+        p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
 
-def likeRandomVideo() : 
+        for i in range(3) :
+                c = 0.9 - (i/10 if i != 0 else 0)
+                t = pyautogui.locateCenterOnScreen(p, grayscale=False, confidence=c)
+                if(t) :
+                      return t
+        return 1
+                
+
+
+def likeCommentFollow() : 
       x = random.randint(1,3)
       for _ in range(1,x) : 
             
             #Await for a sec
-            if (int(time.time())%5 == 0) : awaitPure()
+            if (random.randint(1,7) == 7) : awaitPure()
             else : randomAwait()
 
             #Like a video or do a random movement
-            if(int(time.time())%3 == 0) : locateAndClick('like.png')
-            else : randomMovement()
+            if(random.randint(1,2) == 2) : 
+                try : locateAndClick('like.png')
+                except :
+                      try : 
+                        t = justLocate('comments.png')
+                        if t != 1 : pyautogui.click(t[0], t[1]-75, duration = 1)
+                      except : 
+                        logging.warning('Nor the like button nor the comment button were found')
+                        pyautogui.press('l')
+        
+            randomAwait()
+            if(random.randint(1,5) == 5) : 
+                commentOnVideo()
 
             randomAwait()
-            pyautogui.scroll(-1100)
-            sleep(random.randint(1,2))
-            pyautogui.scroll(-1100)
+            if(random.randint(1,10) == 9) :
+                try : locateAndClick('follow.png')
+                except : pass
+           
+            randomMovement()
+
+def commentOnVideo() :
+      try : 
+        locateAndClick('comments.png')
+      except :
+        pyautogui.click(TIKTOK_CENTER, duration = 1)
+        pyautogui.press('enter')
+     
+      randomAwait()
+      randomAwait()
+      randomMovement()
+      randomAwait()
+      try :
+            locateAndClick('addComment.png')
+            pyautogui.typewrite(random.choice(COMMENTS), interval = 0.25)
+            pyautogui.press('enter')
+      except :
+            p = justLocate('volumeOn.png')
+            if p != 1 :
+                pyautogui.click(p[0]+85, p[1], duration = 1)
+                pyautogui.typewrite(random.choice(COMMENTS), interval = 0.25)
+                pyautogui.press('enter')
+            else :
+                  p = justLocate('volumeOff.png')
+                  if p != 1 :
+                        pyautogui.click(p[0]+85, p[1], duration = 1)
+                        pyautogui.typewrite(random.choice(COMMENTS), interval = 0.25)
+                        pyautogui.press('enter')
+      finally :
+            randomAwait()
+            randomAwait()
+            locateAndClick('exitFromComments.png')
+            randomAwait()
+
 
 def randomMovement() :
-      pyautogui.move(random.randint(-100,100), random.randint(-100,100), duration = 0.5)
+      pyautogui.moveTo(random.randint(530,750), random.randint(300,700), duration = 1.5)
 
 
 #Functions related to the video

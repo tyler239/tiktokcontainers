@@ -2,16 +2,18 @@
 import webbrowser, pyautogui, random, logging
 from Utils.utils import *
 
-firefox_search_bar = (516, 64)
 
 logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def main() :
-    logging.info(f'Program started in the {__name__} sctipt')
+    logging.info('Program started in the userMode sctipt')
     accounts = getAccounts()
     random.shuffle(accounts)
 
-    webbrowser.open('https://www.google.com/')
+    if not webbrowser.open('https://www.google.com/') :
+        logging.warning('The browser was not opened')
+        exit()
+    
     awaitPure()
 
     for account in accounts :    
@@ -37,12 +39,32 @@ def main() :
         captchaWithOutThread()
 
         #Possibly like a video
-        for _ in range(random.randint(0,5)) :
+        for _ in range(random.randint(5,21)) :
             try: 
-                likeRandomVideo()
+                #When the user likes the video
+                #1/3 of chances to comment 
+                #and 1/6 to follow
+                #All included in this function
+                if random.randint(1,2) == 1 : 
+                    likeCommentFollow()
+                    
+                if random.randint(1,4) == 4 :
+                    #UP
+                    pyautogui.scroll(1100)
+                    randomAwait()
+                else :
+                    #DOWN
+                    pyautogui.scroll(-1100)
+                    randomAwait()
+                    if random.randint(1,3) == 3 : pyautogui.scroll(-1100)
+
+                randomMovement()
+                randomAwait()
+
             except :
                 logging.warning('There was a problem liking a video')
-                pass
+                pyautogui.press('down')
+
             randomAwait()
         
         closeWindow()

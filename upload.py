@@ -3,11 +3,6 @@ import webbrowser, pyautogui, random
 from Utils.utils import *
 import logging
 
-#Put here the (x,y) location of the required elements
-firefox_search_bar = (516, 64)
-archive_search_bar = (505,657)
-open_button_of_search_bar = (1191,687)
-
 
 logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
@@ -40,15 +35,19 @@ def selectFile(path, hashtag) :
         #Scroll down to post the video
         pyautogui.scroll(-1000)
         randomAwait()
+        randomAwait()
 
 
 def main() :
-    logging.info(f'Program started in the {__name__} sctipt')
+    logging.info('Program started in the uploadMode sctipt')
     accounts = getAccounts()
     random.shuffle(accounts)
 
     #Open the browser in google
-    webbrowser.open('https://www.google.com/')
+    if not webbrowser.open('https://www.google.com/') :
+        logging.warning('The browser was not opened')
+        exit()
+        
     awaitPure()
 
     for account in accounts :
@@ -86,7 +85,8 @@ def main() :
         except : 
            try :
                pyautogui.hotkey('ctrl', 'r')
-               randomAwait()
+               locateAndClick('leavePage.png')
+               awaitPure()
                selectFile(path, account[1])
                locateAndClick('post.png')
            except :
