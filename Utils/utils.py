@@ -35,6 +35,7 @@ def locateAndClick(image) :
                 awaitPure()
                 
         logging.warning(f'Element {image} was not found')
+        pyautogui.press('down')
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
 
 def justLocate(image) :
