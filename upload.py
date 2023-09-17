@@ -1,12 +1,13 @@
 #Importing the libraries
 import webbrowser, pyautogui, random
 from Utils.utils import *
+from Utils.constants import *
 import logging
 
 
 logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
-def selectFile(path, hashtag) :
+def selectFile(path) :
      #Click on "select file" button
         locateAndClick('selectFile.png')
 
@@ -27,7 +28,7 @@ def selectFile(path, hashtag) :
         locateAndClick('hashtag.png')
          
         deleteAutoGui()
-        pyautogui.typewrite(hashtag , interval = 0.1)
+        pyautogui.typewrite(HASHTAGS() , interval = 0.1)
         randomAwait()
 
         #Add description here if necessary !!!!!!!!!
@@ -40,7 +41,7 @@ def selectFile(path, hashtag) :
 
 def main() :
     logging.info('Program started in the uploadMode sctipt')
-    accounts = getAccounts()
+    accounts = ACCOUNTS
     random.shuffle(accounts)
 
     #Open the browser in google
@@ -51,11 +52,11 @@ def main() :
     awaitPure()
 
     for account in accounts :
-        logging.info(f'############ Account: {account[0]} ############')
+        logging.info(f'############ Account: {account} ############')
         path = getVideoPath() 
 
          #Change to the container  
-        chooseContainer(account[0])
+        chooseContainer(account)
         randomAwait()
 
         #Go to tiktok upload url
@@ -73,7 +74,7 @@ def main() :
         #Check if there is a captcha
         captchaWithOutThread()
 
-        try : selectFile(path, account[1])
+        try : selectFile(path)
         except :
             logging.warning('Error in selecting the file, first try')
             closeWindow()
@@ -87,7 +88,7 @@ def main() :
                pyautogui.hotkey('ctrl', 'r')
                locateAndClick('leavePage.png')
                awaitPure()
-               selectFile(path, account[1])
+               selectFile(path)
                locateAndClick('post.png')
            except :
                logging.warning('Error in posting the video')

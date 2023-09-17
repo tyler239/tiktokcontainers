@@ -1,5 +1,5 @@
-import random, os, pyautogui, random, logging
 from time import sleep
+import random, os, pyautogui, random, logging
 
 #CONSTANTS
 firefox_search_bar = (516, 64)
@@ -133,30 +133,6 @@ def getVideoPath() :
 
 def excludeUsedVideo(path) :
         os.remove(path)
-
-
-#Getting the accounts information from the file
-def getAccounts() :
-    
-    #If the directory "Accounts" or the file "accounts.txt" doesn't exist, create them
-    if(os.path.exists(os.path.join(os.getcwd() ,'Accounts')) == False) : os.mkdir('Accounts')
-    if(os.path.exists(os.path.join(os.getcwd(), 'Accounts', 'accounts.txt')) == False) :
-        with open(os.path.join(os.getcwd(), 'Accounts', 'accounts.txt'), 'w') as file :
-            file.write('')
-
-    accounts = []
-    path = os.path.join(os.getcwd(), 'Accounts', 'accounts.txt')
-    with open(os.path.abspath(path) ,'r') as file :
-        for line in file :
-              t = tuple(el.strip() for el in line.split(','))
-              accounts.append(t)
-
-    if(len(accounts) == 0) : 
-        print('There is no account to upload the video')
-        raise Exception('There is no account to upload the video')
-    
-    return accounts
-
 
 #Captcha functions
 def captchaWithOutThread() :
