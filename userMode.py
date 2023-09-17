@@ -1,13 +1,13 @@
 #Importing the libraries
 import webbrowser, pyautogui, random, logging
-from Utils.utils import *
+from Utils.utils import *; from Utils.constants import *
 
 
 logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def main() :
     logging.info('Program started in the userMode sctipt')
-    accounts = getAccounts()
+    accounts = ACCOUNTS
     random.shuffle(accounts)
 
     if not webbrowser.open('https://www.google.com/') :
@@ -17,10 +17,10 @@ def main() :
     awaitPure()
 
     for account in accounts :    
-        logging.info(f'############ Account: {account[0]} ############')
+        logging.info(f'############ Account: {account} ############')
 
         #Change to the container  
-        chooseContainer(account[0])
+        chooseContainer(account)
         randomAwait() 
 
          #Go to tiktok
