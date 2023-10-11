@@ -5,7 +5,8 @@ from Utils.constants import *
 import logging
 
 
-logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
+logFile = os.path.join(os.environ.get('USERPROFILE'), 'tiktokcontainers', 'tiktok.log')
+logging.basicConfig(filename=logFile, level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def selectFile(path) :
      #Click on "select file" button
@@ -53,7 +54,12 @@ def main() :
 
     for account in accounts :
         logging.info(f'############ Account: {account} ############')
-        path = getVideoPath() 
+
+        try : 
+            path = getVideoPath()
+        except : 
+            logging.warning('There was no video to upload')
+            exit()
 
          #Change to the container  
         chooseContainer(account)

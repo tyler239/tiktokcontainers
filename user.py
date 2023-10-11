@@ -1,12 +1,13 @@
 #Importing the libraries
+import os
 import webbrowser, pyautogui, random, logging
 from Utils.utils import *; from Utils.constants import *
 
-
-logging.basicConfig(filename='tiktok.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
+logFile = os.path.join(os.environ.get('USERPROFILE'), 'tiktokcontainers', 'tiktok.log')
+logging.basicConfig(filename=logFile, level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def main() :
-    logging.info('Program started in the userMode sctipt')
+    logging.info('Program started in the user sctipt')
     accounts = ACCOUNTS
     random.shuffle(accounts)
 

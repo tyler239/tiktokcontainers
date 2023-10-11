@@ -1,21 +1,11 @@
 from time import sleep
+from constants import *
 import random, os, pyautogui, random, logging
-
-#CONSTANTS
-firefox_search_bar = (516, 64)
-archive_search_bar = (505,657)
-open_button_of_search_bar = (1191,687)
-TIKTOK_CENTER = (720, 400)
 
 #Await functions
 randomAwait = lambda : sleep(random.randint(1,3))
 awaitPure = lambda : sleep(random.randint(5,10))
 
-COMMENTS = ['bem', 'nem falo isso ai', 'kkkkkkkkkkk', 'kkk', 'k', 'KKKKKKKKKKKKKKKK', 'KKKKKKKKK'
-            , 'K', 'KK', 'SKSKSKSKSKSSKSKSKSKSKSKSS', 'APSDOIFAPSIOJFDJASIJDF', 'RS', 'RSRSRSRSRSRS',
-            'rsrs', 'botei fe', 'la ele', 'la ele mil', 'hahahaahahahahaahaha', 'ahahahahaahah'
-            , 'ha', 'ah', 'ahh', 'ahhh', 'ahhh ent ele e', 'jeejejejeejejej', 'JEJEJEEJEJEJEJE', 
-            'je', 'lmao', 'LMAO', 'idk...', 'aka yo mama', 'cringe', 'fake']
 
 #User Interface functions
 def deleteAutoGui() :
