@@ -6,26 +6,50 @@ import logging
 
 
 logFile = os.path.join(os.environ.get('USERPROFILE'), 'tiktokcontainers', 'tiktok.log')
-logging.basicConfig(filename=logFile, level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
+logging.basicConfig(filename=logFile, level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
-def selectFile(path) :
+def selectFile(path, selectFile) :
      #Click on "select file" button
-        locateAndClick('selectFile.png')
+        locateAndClick(selectFile)
 
         randomAwait()
 
-        #Click on the search bar of the archive explorer
-        pyautogui.click(archive_search_bar ,duration = 1)
+        # Let's try to insert the path of the video in the input bar
+        loc = justLocate('archiveName.png')
+        
+        if loc == 1 : 
+            # If the archive name was not found
+            print('The archive name was not found')
+            loc = justLocate('archiveOpenButton.png')
+            
+            if loc == 1 : 
+            # If the archive open button was not found
+                print('The archive open button was not found')
+                loc = justLocate('archiveCancelButton.png')
 
-        #Put the path of the video
+                if loc == 1 :
+                # If the archive cancel button was not found
+                    print('The archive cancel button was not found')
+                    logging.warning('The archive name, the archive open button and the archive cancel button were not found')
+                    closeWindow()
+                    return
+                else :
+                # If the archive cancel button was found
+                    pyautogui.click(loc[0]-100, loc[1]-14, duration = 1)
+            else :
+            # If the archive open button was found
+                pyautogui.click(loc[0]-50, loc[1]-14, duration = 1)
+        else : 
+        # If the archive name was found
+            pyautogui.click(loc[0]+40, loc[1], duration = 1)
+
+        # Put the path of the video
         pyautogui.typewrite(path, interval = 0.1)
+        pyautogui.press('enter')
 
-        #Click in open
-        pyautogui.click(open_button_of_search_bar,duration = 1)
-        awaitPure()
-        sleep(180)
 
         #Add captions
+        sleep(210)
         locateAndClick('hashtag.png')
          
         deleteAutoGui()
@@ -77,14 +101,23 @@ def main() :
         pyautogui.press('enter')
         awaitPure()
 
+        # Check it the user is or not logged in
+        if justLocate('login2.png') != 1 :
+            logging.warning(f'The user {account} not is logged!!!')
+            closeWindow()
+            continue
+
         #Check if there is a captcha
         captchaWithOutThread()
 
-        try : selectFile(path)
+        try : selectFile(path, 'selectFile.png')
         except :
             logging.warning('Error in selecting the file, first try')
-            closeWindow()
-            continue
+            try : selectFile(path, 'selectFile2.png')
+            except :
+                logging.warning('Error in selecting the file, second try, going to the next account')
+                closeWindow()
+                continue
 
         #Click on the post button
         try : 
@@ -94,10 +127,10 @@ def main() :
                pyautogui.hotkey('ctrl', 'r')
                locateAndClick('leavePage.png')
                awaitPure()
-               selectFile(path)
+               selectFile(path, 'selectFile2.png')
                locateAndClick('post.png')
            except :
-               logging.warning('Error in posting the video')
+               logging.warning('Error in posting the video. Going to the next account')
                closeWindow()
                continue            
              

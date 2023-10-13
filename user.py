@@ -36,6 +36,12 @@ def main() :
         pyautogui.press('enter')
         awaitPure()
 
+        #Check if the user is logged in
+        if isLoggedIn() == False :
+            logging.warning(f'The user {account} is not logged!!!')
+            closeWindow()
+            continue
+
         #Check if there is a captcha
         captchaWithOutThread()
 

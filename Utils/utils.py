@@ -1,11 +1,20 @@
 from time import sleep
-from constants import *
+from Utils.constants import *
 import random, os, pyautogui, random, logging
 
 #Await functions
 randomAwait = lambda : sleep(random.randint(1,3))
 awaitPure = lambda : sleep(random.randint(5,10))
 
+def isLoggedIn() :
+      try :
+            locateAndClick('login.png')
+            randomAwait()
+            locateAndClick('login2.png')
+            return False
+      except :
+        # If was raised an exception, the button was not found, so the user is logged in
+        return True
 
 #User Interface functions
 def deleteAutoGui() :
@@ -14,8 +23,15 @@ def deleteAutoGui() :
 
 
 def locateAndClick(image) :
-        p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
+        assetsPath = os.path.abspath(os.path.dirname(__file__).replace('Utils', 'Assets'))
 
+        # Try to locate the image in the English and Portuguese folder
+        if os.path.exists(os.path.join(assetsPath, 'Images', 'English', image)) :
+            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
+        elif os.path.exists(os.path.join(assetsPath, 'Images', 'Portuguese', image)) :
+            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'Portuguese',  image)
+
+        # Try to click the image with 3 different confidences
         for i in range(3) :
                 c = 0.9 - (i/10 if i != 0 else 0)
                 t = pyautogui.locateCenterOnScreen(p, grayscale=False, confidence=c)
@@ -29,13 +45,22 @@ def locateAndClick(image) :
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
 
 def justLocate(image) :
-        p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
+        assetsPath = os.path.abspath(os.path.dirname(__file__).replace('Utils', 'Assets'))
 
+        # Try to locate the image in the English and Portuguese folder
+        if os.path.exists(os.path.join(assetsPath, 'Images', 'English', image)) :
+            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
+        elif os.path.exists(os.path.join(assetsPath, 'Images', 'Portuguese', image)) :
+            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'Portuguese',  image)
+
+        # Try to click the image with 3 different confidences
         for i in range(3) :
                 c = 0.9 - (i/10 if i != 0 else 0)
                 t = pyautogui.locateCenterOnScreen(p, grayscale=False, confidence=c)
                 if(t) :
                       return t
+                
+        # If it does not find the image, return 1
         return 1
                 
 
