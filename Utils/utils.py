@@ -152,6 +152,7 @@ def excludeUsedVideo(path) :
 #Captcha functions
 def captchaWithOutThread() :
     randomAwait()
+    return
     if(pyautogui.locateOnScreen('Assets\\Images\\English\\captcha.png') or 
        pyautogui.locateOnScreen('Assets\\Images\\English\\dragAndSlide.png') or 
        pyautogui.locateOnScreen('Assets\\Images\\Portuguese\\3D.png') or 
