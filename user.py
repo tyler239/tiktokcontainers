@@ -39,6 +39,7 @@ def main() :
         #Check if the user is logged in
         if isLoggedIn() == False :
             logging.warning(f'The user {account} is not logged!!!')
+            accounts.remove(account)
             closeWindow()
             continue
 

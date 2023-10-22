@@ -76,77 +76,86 @@ def main() :
         
     awaitPure()
 
-    for account in accounts :
-        logging.info(f'############ Account: {account} ############')
+    '''
+    This outter loop is to control how many videos each account will post
+    '''
+    for _ in range(3) :
+        for account in accounts :
+            logging.info(f'############ Account: {account} ############')
 
-        try : 
-            path = getVideoPath()
-        except : 
-            logging.warning('There was no video to upload')
-            exit()
-
-         #Change to the container  
-        chooseContainer(account)
-        randomAwait()
-
-        #Go to tiktok upload url
-        try : locateAndClick('magnifying.png')
-        except : 
-            try : pyautogui.click(firefox_search_bar, duration = 1)
+            try : 
+                path = getVideoPath()
             except : 
-                logging.warning('Nor the magnifying glass nor the search bar were found')
-                closeWindow()
-                continue 
-        pyautogui.typewrite('https://www.tiktok.com/upload', interval = 0.25)
-        pyautogui.press('enter')
-        awaitPure()
+                logging.warning('There was no video to upload')
+                exit()
 
-        # Check it the user is or not logged in
-        if justLocate('login2.png') != 1 :
-            logging.warning(f'The user {account} not is logged!!!')
-            closeWindow()
-            continue
+            #Change to the container  
+            chooseContainer(account)
+            randomAwait()
 
-        #Check if there is a captcha
-        captchaWithOutThread()
+            #Go to tiktok upload url
+            try : locateAndClick('magnifying.png')
+            except : 
+                try : pyautogui.click(firefox_search_bar, duration = 1)
+                except : 
+                    logging.warning('Nor the magnifying glass nor the search bar were found')
+                    closeWindow()
+                    continue 
+            pyautogui.typewrite('https://www.tiktok.com/upload', interval = 0.25)
+            pyautogui.press('enter')
+            awaitPure()
 
-        try : selectFile(path, 'selectFile.png')
-        except :
-            logging.warning('Error in selecting the file, first try')
-            try : selectFile(path, 'selectFile2.png')
-            except :
-                logging.warning('Error in selecting the file, second try, going to the next account')
+            # Check it the user is or not logged in
+            if justLocate('login2.png') != 1 :
+                logging.warning(f'The user {account} not is logged!!!')
+                accounts.remove(account)
                 closeWindow()
                 continue
 
-        #Click on the post button
-        try : 
-            locateAndClick('post.png')
-        except : 
-           try :
-               pyautogui.hotkey('ctrl', 'r')
-               locateAndClick('leavePage.png')
-               awaitPure()
-               selectFile(path, 'selectFile2.png')
-               locateAndClick('post.png')
-           except :
-               logging.warning('Error in posting the video. Going to the next account')
-               closeWindow()
-               continue            
-             
-        awaitPure()
-        #Check if there is a captcha
-        captchaWithOutThread()
+            #Check if there is a captcha
+            captchaWithOutThread()
 
-        #Click on the profile button
-        try : locateAndClick('viewProfile.png')
-        except : 
-            logging.debug('The view profile button was not found')
-            closeWindow()
-            continue
+            try : selectFile(path, 'selectFile.png')
+            except :
+                logging.warning('Error in selecting the file, first try')
+                try : selectFile(path, 'selectFile2.png')
+                except :
+                    logging.warning('Error in selecting the file, second try, going to the next account')
+                    closeWindow()
+                    continue
+
+            #Click on the post button
+            try : 
+                locateAndClick('post.png')
+            except : 
+                try :
+                    pyautogui.hotkey('ctrl', 'r')
+                    locateAndClick('leavePage.png')
+                    awaitPure()
+                    selectFile(path, 'selectFile2.png')
+                    locateAndClick('post.png')
+                except :
+                    logging.warning('Error in posting the video. Going to the next account')
+                    closeWindow()
+                    continue            
+                
+            awaitPure()
+            #Check if there is a captcha
+            captchaWithOutThread()
+
+            #Click on the profile button
+            try : locateAndClick('manage.png')
+            except : 
+                try :
+                    logging.info('The manage button was not found')
+                    closeWindow()
+                    randomAwait()
+                    locateAndClick('leavePage.png')
+                except :
+                    pass
             
-        awaitPure()
-        closeWindow()
+            awaitPure()
+            closeWindow()
 
 
 if __name__ == '__main__' :

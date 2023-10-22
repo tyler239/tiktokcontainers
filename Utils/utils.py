@@ -152,10 +152,10 @@ def excludeUsedVideo(path) :
 #Captcha functions
 def captchaWithOutThread() :
     randomAwait()
-    if(pyautogui.locateOnScreen('Assets\Images\English\captcha.png') or 
-       pyautogui.locateOnScreen('Assets\Images\English\dragAndSlide.png') or 
-       pyautogui.locateOnScreen('Assets\Images\Portuguese\\3D.png') or 
-       pyautogui.locateOnScreen('Assets\Images\Portuguese\\3D2.png')
+    if(pyautogui.locateOnScreen('Assets\\Images\\English\\captcha.png') or 
+       pyautogui.locateOnScreen('Assets\\Images\\English\\dragAndSlide.png') or 
+       pyautogui.locateOnScreen('Assets\\Images\\Portuguese\\3D.png') or 
+       pyautogui.locateOnScreen('Assets\\Images\\Portuguese\\3D2.png')
        ):
         input('Captcha DETECTED, resolve mannually the captcha and after press "ENTER" to continue the program')
         print('The program will continue in 30 seconds...')
@@ -177,6 +177,7 @@ def closeWindow() :
 
 #Choose a container
 def chooseContainer(num) :
+    awaitPure()
     pyautogui.keyDown('shift')
     pyautogui.hotkey('ctrl', f'{num}')
     pyautogui.keyUp('shift')
