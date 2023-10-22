@@ -134,17 +134,22 @@ def randomMovement() :
 
 
 #Functions related to the video
-def getVideoPath() :
-        video_options = []
-        path = os.path.join(os.getcwd(), 'Assets', 'Videos')
-        for filename in os.listdir(path) :
-                video_options.append(filename)
+def getVideoPath():
+    video_options = []
+    videos_dir = os.path.join(os.getcwd(), 'Assets', 'Videos')
 
-        if len(video_options) == 0 :
-                print('There is no video to upload')
-                raise Exception('There is no video to upload') 
-              
-        return os.path.join(os.getcwd(), 'Assets', 'Videos', random.choice(video_options))
+    # Check if the "Videos" folder exists, and create it if it doesn't
+    if not os.path.exists(videos_dir):
+        os.makedirs(videos_dir)
+
+    for filename in os.listdir(videos_dir):
+        video_options.append(filename)
+
+    if len(video_options) == 0:
+        print('There is no video to upload')
+        raise Exception('There is no video to upload')
+
+    return os.path.join(videos_dir, random.choice(video_options))
 
 def excludeUsedVideo(path) :
         os.remove(path)
