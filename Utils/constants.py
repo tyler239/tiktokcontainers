@@ -4,7 +4,7 @@ import platform
 
 ACCOUNTS = [1,2,3,4,5,6,7,8,9]
 
-hashtags = '#gadgets #giftideas #lifehacks #tech #viralcuts #bestedit #controversy #viraledit #cantbelieve #crazyedit #tiktokedit #tiktoknews #influenceredit'
+hashtags = '#sucesso #ganhardinheiroonline #ferramentas #marketingdigital #sites #jovensdenegócios #riqueza #milionario #rico #money'
 
 HASHTAGS = lambda : ''.join([random.choice([i for i in hashtags.split(' ') if i]) for _ in range(3)])
 
