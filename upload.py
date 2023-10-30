@@ -91,7 +91,7 @@ def main() :
 
             #Change to the container  
             chooseContainer(account)
-            randomAwait()
+            awaitPure()
 
             #Go to tiktok upload url
             try : locateAndClick('magnifying.png')
@@ -113,7 +113,7 @@ def main() :
                 continue
 
             #Check if there is a captcha
-            captchaWithOutThread()
+            #captchaWithOutThread()
 
             try : selectFile(path, 'selectFile.png')
             except :
@@ -141,7 +141,7 @@ def main() :
                 
             awaitPure()
             #Check if there is a captcha
-            captchaWithOutThread()
+            #captchaWithOutThread()
 
             #Click on the profile button
             try : locateAndClick('manage.png')

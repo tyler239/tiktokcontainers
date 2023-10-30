@@ -66,8 +66,8 @@ def justLocate(image) :
 
 
 def likeCommentFollow() : 
-      x = random.randint(1,3)
-      for _ in range(1,x) : 
+      x = random.randint(7,21)
+      for _ in range(0,x) : 
             
             #Await for a sec
             if (random.randint(1,7) == 7) : awaitPure()
