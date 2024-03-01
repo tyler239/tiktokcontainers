@@ -7,14 +7,15 @@ randomAwait = lambda : sleep(random.randint(1,3))
 awaitPure = lambda : sleep(random.randint(5,10))
 
 def isLoggedIn() :
-      try :
-            locateAndClick('login.png')
-            randomAwait()
-            locateAndClick('login2.png')
-            return False
-      except :
-        # If was raised an exception, the button was not found, so the user is logged in
-        return True
+    if(justLocate('login.png') != 1) :
+        randomAwait()
+        return False
+
+    if(justLocate('login2.png') != 1) :
+        randomAwait()
+        return False
+
+    return True
 
 #User Interface functions
 def deleteAutoGui() :
@@ -66,11 +67,12 @@ def justLocate(image) :
 
 
 def likeCommentFollow() : 
-      x = random.randint(7,21)
-      for _ in range(0,x) : 
+      # Max of 3 loops for the same video
+      x = random.randint(1,3)
+      for _ in range(0,x) :     
             
             #Await for a sec
-            if (random.randint(1,7) == 7) : awaitPure()
+            if (random.randint(1,5) == 5) : awaitPure()
             else : randomAwait()
 
             #Like a video or do a random movement
@@ -104,6 +106,7 @@ def commentOnVideo() :
      
       randomAwait()
       randomAwait()
+      awaitPure()
       randomMovement()
       randomAwait()
       try :

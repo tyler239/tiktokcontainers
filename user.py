@@ -15,14 +15,14 @@ def main() :
         logging.warning('The browser was not opened')
         exit()
     
-    awaitPure()
+    awaitPure();randomAwait();randomAwait()
 
     for account in accounts :    
         logging.info(f'############ Account: {account} ############')
 
         #Change to the container  
         chooseContainer(account)
-        randomAwait() 
+        randomAwait();randomAwait();randomAwait() 
 
          #Go to tiktok
         try : locateAndClick('magnifying.png')
@@ -32,14 +32,13 @@ def main() :
                 logging.warning('Nor the magnifying glass nor the search bar were found')
                 closeWindow()
                 continue 
-        pyautogui.typewrite('https://www.tiktok.com', interval = 0.25)
+        pyautogui.write('https://www.tiktok.com')
         pyautogui.press('enter')
-        awaitPure()
+        awaitPure();randomAwait();randomAwait()
 
         #Check if the user is logged in
         if isLoggedIn() == False :
             logging.warning(f'The user {account} is not logged!!!')
-            accounts.remove(account)
             closeWindow()
             continue
 
@@ -74,8 +73,12 @@ def main() :
                 pyautogui.press('down')
 
             randomAwait()
-        
+
         closeWindow()
+    
+    # To close the browser that was first opened
+    randomAwait()
+    closeWindow()
 
 
 if __name__ == '__main__' :
