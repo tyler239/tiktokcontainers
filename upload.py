@@ -9,7 +9,7 @@ logFile = os.path.join(os.environ.get('USERPROFILE'), 'tiktokcontainers', 'tikto
 logging.basicConfig(filename=logFile, level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def selectFile(path, selectFile) :
-     #Click on "select file" button
+        #Click on "select file" button
         locateAndClick(selectFile)
 
         randomAwait()
@@ -44,7 +44,7 @@ def selectFile(path, selectFile) :
             pyautogui.click(loc[0]+40, loc[1], duration = 1)
 
         # Put the path of the video
-        pyautogui.typewrite(path, interval = 0.1)
+        pyautogui.write(path)
         pyautogui.press('enter')
 
 
@@ -101,17 +101,15 @@ def main() :
                     logging.warning('Nor the magnifying glass nor the search bar were found')
                     closeWindow()
                     continue 
-            pyautogui.typewrite('https://www.tiktok.com/upload', interval = 0.25)
+            pyautogui.write('https://www.tiktok.com/upload')
             pyautogui.press('enter')
             awaitPure()
 
             # Check it the user is or not logged in
-            if justLocate('login2.png') != 1 :
-                logging.warning(f'The user {account} not is logged!!!')
-                accounts.remove(account)
+            if isLoggedIn() == False :
+                logging.warning(f'The user {account} is not logged!!!')
                 closeWindow()
                 continue
-
             #Check if there is a captcha
             #captchaWithOutThread()
 

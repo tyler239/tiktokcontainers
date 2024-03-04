@@ -67,8 +67,8 @@ def justLocate(image) :
 
 
 def likeCommentFollow() : 
-      # Max of 3 loops for the same video
-      x = random.randint(1,3)
+      # Max of 2 loops for the same video
+      x = random.randint(1,2)
       for _ in range(0,x) :     
             
             #Await for a sec
@@ -87,11 +87,11 @@ def likeCommentFollow() :
                         pyautogui.press('l')
         
             randomAwait()
-            if(random.randint(1,5) == 5) : 
+            if(random.randint(1,10) == 10) : 
                 commentOnVideo()
 
             randomAwait()
-            if(random.randint(1,10) == 9) :
+            if(random.randint(1,20) == 20) :
                 try : locateAndClick('follow.png')
                 except : pass
            
@@ -138,21 +138,17 @@ def randomMovement() :
 
 #Functions related to the video
 def getVideoPath():
-    video_options = []
     videos_dir = os.path.join(os.getcwd(), 'Assets', 'Videos')
 
     # Check if the "Videos" folder exists, and create it if it doesn't
     if not os.path.exists(videos_dir):
         os.makedirs(videos_dir)
 
-    for filename in os.listdir(videos_dir):
-        video_options.append(filename)
-
-    if len(video_options) == 0:
+    if len(os.listdir(videos_dir)) == 0:
         print('There is no video to upload')
         raise Exception('There is no video to upload')
 
-    return os.path.join(videos_dir, random.choice(video_options))
+    return os.path.join(videos_dir, random.choice(os.listdir(videos_dir)))
 
 def excludeUsedVideo(path) :
         os.remove(path)

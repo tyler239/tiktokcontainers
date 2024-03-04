@@ -46,7 +46,7 @@ def main() :
         #captchaWithOutThread()
 
         #Possibly like a video
-        for _ in range(random.randint(7,21)) :
+        for _ in range(random.randint(7,14)) :
             try: 
                 #When the user likes the video
                 #1/3 of chances to comment 
@@ -54,7 +54,7 @@ def main() :
                 #All included in this function
                 likeCommentFollow()
                     
-                if random.randint(1,7) == 4 :
+                if random.randint(1,10) == 10 :
                     #UP
                     pyautogui.scroll(1100)
                     randomAwait()
@@ -62,10 +62,8 @@ def main() :
                     #DOWN
                     pyautogui.scroll(-1100)
                     randomAwait()
-                    if random.randint(1,3) == 3 : pyautogui.scroll(-1100)
+                    if random.randint(1,2) == 2 : pyautogui.scroll(-1100)
 
-                randomMovement()
-                randomAwait()
                 randomAwait()
 
             except :
