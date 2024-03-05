@@ -66,8 +66,8 @@ def selectFile(path, selectFile) :
 
 def main() :
     logging.info('Program started in the uploadMode sctipt')
-    accounts = ACCOUNTS
-    random.shuffle(accounts)
+    updatedAccounts = ACCOUNTS
+    random.shuffle(updatedAccounts)
 
     #Open the browser in google
     if not webbrowser.open('https://www.google.com/') :
@@ -79,7 +79,8 @@ def main() :
     '''
     This outter loop is to control how many videos each account will post
     '''
-    for _ in range(3) :
+    for _ in range(1) :
+        accounts = updatedAccounts
         for account in accounts :
             logging.info(f'############ Account: {account} ############')
 
@@ -109,6 +110,7 @@ def main() :
             if isLoggedIn() == False :
                 logging.warning(f'The user {account} is not logged!!!')
                 closeWindow()
+                updatedAccounts.remove(account)
                 continue
             #Check if there is a captcha
             #captchaWithOutThread()
@@ -122,7 +124,7 @@ def main() :
                     closeWindow()
                     continue
 
-            #Click on the post button
+            #Click on the post https://www.tiktok.com/upload
             try : 
                 locateAndClick('post.png')
             except : 
