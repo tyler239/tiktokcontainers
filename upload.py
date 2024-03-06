@@ -9,65 +9,25 @@ logFile = os.path.join(os.environ.get('USERPROFILE'), 'tiktokcontainers', 'tikto
 logging.basicConfig(filename=logFile, level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s', encoding='utf-8')
 
 def selectFile(path, selectFile) :
-        #Click on "select file" button
+        # Click on "select file" button
         locateAndClick(selectFile)
-
-        randomAwait()
-
-        # Let's try to insert the path of the video in the input bar
-        loc = justLocate('archiveName.png')
-        
-        if loc == 1 : 
-            # If the archive name was not found
-            print('The archive name was not found')
-            loc = justLocate('archiveOpenButton.png')
-            
-            if loc == 1 : 
-            # If the archive open button was not found
-                print('The archive open button was not found')
-                loc = justLocate('archiveCancelButton.png')
-
-                if loc == 1 :
-                # If the archive cancel button was not found
-                    print('The archive cancel button was not found')
-                    logging.warning('The archive name, the archive open button and the archive cancel button were not found')
-                    closeWindow()
-                    return
-                else :
-                # If the archive cancel button was found
-                    pyautogui.click(loc[0]-100, loc[1]-14, duration = 1)
-            else :
-            # If the archive open button was found
-                pyautogui.click(loc[0]-50, loc[1]-14, duration = 1)
-        else : 
-        # If the archive name was found
-            pyautogui.click(loc[0]+40, loc[1], duration = 1)
+        randomAwait();randomAwait();randomAwait()
 
         # Put the path of the video
         pyautogui.write(path)
         pyautogui.press('enter')
 
-
-        #Add captions
-        sleep(210)
-        locateAndClick('hashtag.png')
-         
-        deleteAutoGui()
-        pyautogui.typewrite(HASHTAGS() , interval = 0.1)
-        randomAwait()
-
-        #Add description here if necessary !!!!!!!!!
-        
-        #Scroll down to post the video
-        pyautogui.scroll(-1000)
-        randomAwait()
-        randomAwait()
+def putHashtags() :
+    locateAndClick('hashtag.png')
+    deleteAutoGui()
+    pyautogui.typewrite(HASHTAGS() , interval = 0.3)
+    randomAwait()
 
 
 def main() :
     logging.info('Program started in the uploadMode sctipt')
-    updatedAccounts = ACCOUNTS
-    random.shuffle(updatedAccounts)
+    accounts = ACCOUNTS
+    random.shuffle(accounts)
 
     #Open the browser in google
     if not webbrowser.open('https://www.google.com/') :
@@ -76,56 +36,69 @@ def main() :
         
     awaitPure()
 
-    '''
-    This outter loop is to control how many videos each account will post
-    '''
-    for _ in range(1) :
-        accounts = updatedAccounts
-        for account in accounts :
-            logging.info(f'############ Account: {account} ############')
+    for account in accounts :
+        logging.info(f'############ Account: {account} ############')
 
-            try : 
+        try : 
+            paths = []
+            while len(paths) < 2 :
                 path = getVideoPath()
+                if path not in paths : paths.append(path)
+        except : 
+            logging.warning('There was no video to upload')
+            exit()
+
+        #Change to the container  
+        chooseContainer(account)
+        awaitPure()
+
+        #Go to tiktok upload url
+        ''' try : locateAndClick('magnifying.png')
+        except : 
+            try : pyautogui.click(firefox_search_bar, duration = 1)
             except : 
-                logging.warning('There was no video to upload')
-                exit()
-
-            #Change to the container  
-            chooseContainer(account)
-            awaitPure()
-
-            #Go to tiktok upload url
-            try : locateAndClick('magnifying.png')
-            except : 
-                try : pyautogui.click(firefox_search_bar, duration = 1)
-                except : 
-                    logging.warning('Nor the magnifying glass nor the search bar were found')
-                    closeWindow()
-                    continue 
-            pyautogui.write('https://www.tiktok.com/upload')
-            pyautogui.press('enter')
-            awaitPure()
-
-            # Check it the user is or not logged in
-            if isLoggedIn() == False :
-                logging.warning(f'The user {account} is not logged!!!')
+                logging.warning('Nor the magnifying glass nor the search bar were found')
                 closeWindow()
-                updatedAccounts.remove(account)
-                continue
-            #Check if there is a captcha
-            #captchaWithOutThread()
+                continue '''
 
+        pyautogui.write('https://www.tiktok.com/creator-center/upload')
+        pyautogui.press('enter')
+        awaitPure()
+
+        # Check it the user is or not logged in
+        if isLoggedIn() == False :
+            logging.warning(f'The user {account} is not logged!!!')
+            closeWindow()
+            continue
+
+        #Check if there is a captcha
+        #captchaWithOutThread()
+
+        
+        # In this for loop, we post all the videos that were selected
+        for path in paths : 
             try : selectFile(path, 'selectFile.png')
             except :
                 logging.warning('Error in selecting the file, first try')
                 try : selectFile(path, 'selectFile2.png')
                 except :
-                    logging.warning('Error in selecting the file, second try, going to the next account')
-                    closeWindow()
+                    logging.warning('Error in selecting the file, second try, going to the next path')
+                    pyautogui.hotkey('ctrl', 'r')
                     continue
 
-            #Click on the post https://www.tiktok.com/upload
+            # Wait 3 minutes to upload the video
+            sleep(210)
+
+            try : putHashtags()  
+            except Exception as e :
+                logging.warning(f'Error in adding the hashtags: {e}')
+                
+            
+            # Scroll down to post the video
             try : 
+                pyautogui.scroll(-1000)
+                randomAwait()
+                randomAwait()
                 locateAndClick('post.png')
             except : 
                 try :
@@ -133,29 +106,35 @@ def main() :
                     locateAndClick('leavePage.png')
                     awaitPure()
                     selectFile(path, 'selectFile2.png')
+                    putHashtags()
+                    pyautogui.scroll(-1000)
+                    randomAwait();randomAwait()
                     locateAndClick('post.png')
                 except :
                     logging.warning('Error in posting the video. Going to the next account')
-                    closeWindow()
-                    continue            
-                
+                    break            
+                    
             awaitPure()
-            #Check if there is a captcha
-            #captchaWithOutThread()
+            # Check if there is a captcha
+            # captchaWithOutThread()
 
-            #Click on the profile button
-            try : locateAndClick('manage.png')
+            # Click on the post another video button 
+            try : locateAndClick('uploadAnother.png')
             except : 
                 try :
-                    logging.info('The manage button was not found')
-                    closeWindow()
                     randomAwait()
                     locateAndClick('leavePage.png')
+                    randomAwait()
                 except :
-                    pass
+                    break
             
-            awaitPure()
-            closeWindow()
+        # Preparing to go to next account
+        awaitPure()
+        closeWindow()
+    
+    logging.info('Program finished in the uploadMode sctipt')
+    closeWindow()
+    exit()
 
 
 if __name__ == '__main__' :

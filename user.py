@@ -20,18 +20,18 @@ def main() :
     for account in accounts :    
         logging.info(f'############ Account: {account} ############')
 
-        #Change to the container  
+        # Change to the container  
         chooseContainer(account)
         randomAwait();randomAwait();randomAwait() 
 
-         #Go to tiktok
-        try : locateAndClick('magnifying.png')
+        # Go to tiktok
+        '''try : locateAndClick('magnifying.png')
         except : 
             try : pyautogui.click(firefox_search_bar, duration = 1)
             except : 
                 logging.warning('Nor the magnifying glass nor the search bar were found')
                 closeWindow()
-                continue 
+                continue '''
         pyautogui.write('https://www.tiktok.com')
         pyautogui.press('enter')
         awaitPure();randomAwait();randomAwait()
@@ -46,7 +46,7 @@ def main() :
         #captchaWithOutThread()
 
         #Possibly like a video
-        for _ in range(random.randint(7,14)) :
+        for _ in range(random.randint(8,16)) :
             try: 
                 #When the user likes the video
                 #1/3 of chances to comment 
@@ -81,3 +81,4 @@ def main() :
 
 if __name__ == '__main__' :
     main()
+    logging.info('Program finished')

@@ -69,7 +69,7 @@ def justLocate(image) :
 def likeCommentFollow() : 
       # Max of 2 loops for the same video
       x = random.randint(1,2)
-      for _ in range(0,x) :     
+      for _ in range(x) :     
             
             #Await for a sec
             if (random.randint(1,5) == 5) : awaitPure()
