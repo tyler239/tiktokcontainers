@@ -49,17 +49,9 @@ def main() :
             exit()
 
         #Change to the container  
-        chooseContainer(account)
-        awaitPure()
-
-        #Go to tiktok upload url
-        ''' try : locateAndClick('magnifying.png')
-        except : 
-            try : pyautogui.click(firefox_search_bar, duration = 1)
-            except : 
-                logging.warning('Nor the magnifying glass nor the search bar were found')
-                closeWindow()
-                continue '''
+        if chooseContainer(account) == False :
+            logging.warning(f'The container {account} does not exist')
+            continue
 
         pyautogui.write('https://www.tiktok.com/creator-center/upload')
         pyautogui.press('enter')

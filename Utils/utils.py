@@ -23,6 +23,12 @@ def deleteAutoGui() :
        for _ in range(50) : pyautogui.press('backspace')
 
 
+def back2ForYou() :
+     p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English', 'exitFromComments.png')
+     t = pyautogui.locateCenterOnScreen(p, grayscale=True, confidence=1)
+     if t : pyautogui.click(t, duration = random.randint(1,2))
+
+
 def locateAndClick(image) :
         assetsPath = os.path.abspath(os.path.dirname(__file__).replace('Utils', 'Assets'))
 
@@ -54,7 +60,7 @@ def justLocate(image) :
         elif os.path.exists(os.path.join(assetsPath, 'Images', 'Portuguese', image)) :
             p = os.path.join(os.getcwd(), 'Assets', 'Images', 'Portuguese',  image)
 
-        # Try to click the image with 3 different confidences
+        # Try to find the image with 3 different confidences
         for i in range(3) :
                 c = 0.9 - (i/10 if i != 0 else 0)
                 t = pyautogui.locateCenterOnScreen(p, grayscale=False, confidence=c)
@@ -73,7 +79,6 @@ def likeCommentFollow() :
             
             #Await for a sec
             if (random.randint(1,5) == 5) : awaitPure()
-            else : randomAwait()
 
             #Like a video or do a random movement
             if(random.randint(1,2) == 2) : 
@@ -181,8 +186,14 @@ def closeWindow() :
 
 
 #Choose a container
-def chooseContainer(num) :
+def chooseContainer(num) -> bool :
     awaitPure()
     pyautogui.keyDown('shift')
     pyautogui.hotkey('ctrl', f'{num}')
     pyautogui.keyUp('shift')
+
+    randomAwait();randomAwait(); randomAwait()
+
+    # Returns False if the container does not exists
+    if justLocate('firefoxLogo.png') == 1 :  return False
+    else : return True 

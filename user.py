@@ -20,18 +20,11 @@ def main() :
     for account in accounts :    
         logging.info(f'############ Account: {account} ############')
 
-        # Change to the container  
-        chooseContainer(account)
-        randomAwait();randomAwait();randomAwait() 
-
-        # Go to tiktok
-        '''try : locateAndClick('magnifying.png')
-        except : 
-            try : pyautogui.click(firefox_search_bar, duration = 1)
-            except : 
-                logging.warning('Nor the magnifying glass nor the search bar were found')
-                closeWindow()
-                continue '''
+        # Change to the container if it exists
+        if chooseContainer(account) == False :
+            logging.warning(f'The container {account} does not exist')
+            continue   
+        
         pyautogui.write('https://www.tiktok.com')
         pyautogui.press('enter')
         awaitPure();randomAwait();randomAwait()
@@ -48,19 +41,18 @@ def main() :
         #Possibly like a video
         for _ in range(random.randint(8,16)) :
             try: 
-                #When the user likes the video
-                #1/3 of chances to comment 
-                #and 1/6 to follow
-                #All included in this function
+                if random.randint(1,4) == 4 : back2ForYou()
+
                 likeCommentFollow()
-                    
+
+
                 if random.randint(1,10) == 10 :
                     #UP
-                    pyautogui.scroll(1100)
+                    pyautogui.press('up')
                     randomAwait()
                 else :
                     #DOWN
-                    pyautogui.scroll(-1100)
+                    pyautogui.press('down')
                     randomAwait()
                     if random.randint(1,2) == 2 : pyautogui.scroll(-1100)
 
