@@ -24,9 +24,11 @@ def deleteAutoGui() :
 
 
 def back2ForYou() :
-     p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English', 'exitFromComments.png')
-     t = pyautogui.locateCenterOnScreen(p, grayscale=True, confidence=1)
-     if t : pyautogui.click(t, duration = random.randint(1,2))
+    p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English', 'exitFromComments.png')
+    t = pyautogui.locateCenterOnScreen(p, grayscale=True, confidence=0.9)
+    if t : 
+        pyautogui.click(t, duration = random.randint(1,2))
+
 
 
 def locateAndClick(image) :

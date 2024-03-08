@@ -2,7 +2,7 @@ import ctypes
 import random
 import platform
 
-ACCOUNTS = [1,2,3,4,5]
+ACCOUNTS = [1,2,3,4,5,6,7]
 
 hashtags = '#sucesso #ganhardinheiroonline #ferramentas #marketingdigital #sites #jovensdenegócios #riqueza #milionario #rico #money'
 
