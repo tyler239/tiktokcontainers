@@ -1,6 +1,9 @@
+import os
 import ctypes
 import random
 import platform
+
+BASE_PATH = f"{os.environ.get('USERPROFILE')}\\tiktokcontainers"
 
 ACCOUNTS = [1,2,3,4,5,6,7]
 

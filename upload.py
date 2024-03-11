@@ -40,11 +40,12 @@ def main() :
         logging.info(f'############ Account: {account} ############')
 
         try : 
-            paths = []
-            while len(paths) < 2 :
+            paths = []; stop = 0
+            while len(paths) < 2  and stop < 5:
+                stop += 1
                 path = getVideoPath()
                 if path not in paths : paths.append(path)
-        except : 
+        except :    
             logging.warning('There was no video to upload')
             exit()
 

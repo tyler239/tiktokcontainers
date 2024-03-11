@@ -24,7 +24,7 @@ def deleteAutoGui() :
 
 
 def back2ForYou() :
-    p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English', 'exitFromComments.png')
+    p = os.path.join(BASE_PATH, 'Assets', 'Images', 'English', 'exitFromComments.png')
     t = pyautogui.locateCenterOnScreen(p, grayscale=True, confidence=0.9)
     if t : 
         pyautogui.click(t, duration = random.randint(1,2))
@@ -32,13 +32,11 @@ def back2ForYou() :
 
 
 def locateAndClick(image) :
-        assetsPath = os.path.abspath(os.path.dirname(__file__).replace('Utils', 'Assets'))
-
         # Try to locate the image in the English and Portuguese folder
-        if os.path.exists(os.path.join(assetsPath, 'Images', 'English', image)) :
-            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
-        elif os.path.exists(os.path.join(assetsPath, 'Images', 'Portuguese', image)) :
-            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'Portuguese',  image)
+        if os.path.exists(os.path.join(BASE_PATH, 'Assets', 'Images', 'English', image)) :
+            p = os.path.join(BASE_PATH , 'Assets', 'Images', 'English',  image)
+        elif os.path.exists(os.path.join(BASE_PATH, 'Assets', 'Images', 'Portuguese', image)) :
+            p = os.path.join(BASE_PATH, 'Assets', 'Images', 'Portuguese',  image)
 
         # Try to click the image with 3 different confidences
         for i in range(3) :
@@ -54,13 +52,11 @@ def locateAndClick(image) :
         raise Exception('Error in loading the page(element to click was not found)! Program stoped')
 
 def justLocate(image) :
-        assetsPath = os.path.abspath(os.path.dirname(__file__).replace('Utils', 'Assets'))
-
         # Try to locate the image in the English and Portuguese folder
-        if os.path.exists(os.path.join(assetsPath, 'Images', 'English', image)) :
-            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'English',  image)
-        elif os.path.exists(os.path.join(assetsPath, 'Images', 'Portuguese', image)) :
-            p = os.path.join(os.getcwd(), 'Assets', 'Images', 'Portuguese',  image)
+        if os.path.exists(os.path.join(BASE_PATH, 'Assets', 'Images', 'English', image)) :
+            p = os.path.join(BASE_PATH, 'Assets', 'Images', 'English',  image)
+        elif os.path.exists(os.path.join(BASE_PATH, 'Assets', 'Images', 'Portuguese', image)) :
+            p = os.path.join(BASE_PATH, 'Assets', 'Images', 'Portuguese',  image)
 
         # Try to find the image with 3 different confidences
         for i in range(3) :
@@ -145,7 +141,7 @@ def randomMovement() :
 
 #Functions related to the video
 def getVideoPath():
-    videos_dir = os.path.join(os.getcwd(), 'Assets', 'Videos')
+    videos_dir = os.path.join(BASE_PATH, 'Assets', 'Videos')
 
     # Check if the "Videos" folder exists, and create it if it doesn't
     if not os.path.exists(videos_dir):
